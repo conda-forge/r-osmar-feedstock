@@ -1,4 +1,6 @@
 {% set version = '1.1-7' %}
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: r-osmar
@@ -7,20 +9,22 @@ package:
 source:
   fn: osmar_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/osmar_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/osmar/osmar_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/osmar_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/osmar/osmar_{{ version }}.tar.gz
   sha256: 79c4c149a44c4220ca02e97f9675e2bf90de04124c5663ba5d009576b845cd60
 
 build:
-  number: 0
-  script: R CMD INSTALL --build .
-  skip: True  # [win32]
+  merge_build_host: True  # [win]
+  number: 1
+  skip: true  # [win32]
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
+    - {{posix}}zip               # [win]
+  host:
     - r-base
     - r-rcurl
     - r-xml
@@ -33,16 +37,25 @@ requirements:
 
 test:
   commands:
-    - $R -e "library('osmar')"  # [not win]
+    - $R -e "library('osmar')"           # [not win]
     - "\"%R%\" -e \"library('osmar')\""  # [win]
 
 about:
-  home: https://cran.r-project.org/web/packages/osmar
+  home: http://osmar.r-forge.r-project.org/
   license: GPL-2
   summary: This package provides infrastructure to access OpenStreetMap data from different sources,
     to work with the data in common R manner, and to convert data into available infrastructure
     provided by existing R packages (e.g., into sp and igraph objects).
+  license_family: GPL2
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'  # [unix]
+  license_file: '{{ environ["PREFIX"] }}\R\share\licenses\GPL-2'  # [win]
 
 extra:
   recipe-maintainers:
     - ocefpaf
+    - johanneskoester
+    - bgruening
+    - daler
+    - jdblischak
+    - cbrueffer
+    - dbast
