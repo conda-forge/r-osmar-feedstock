@@ -1,11 +1,11 @@
-About r-osmar
-=============
+About r-osmar-feedstock
+=======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-osmar-feedstock/blob/main/LICENSE.txt)
 
 Home: http://osmar.r-forge.r-project.org/
 
 Package license: GPL-2
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-osmar-feedstock/blob/main/LICENSE.txt)
 
 Summary: This package provides infrastructure to access OpenStreetMap data from different sources, to work with the data in common R manner, and to convert data into available infrastructure provided by existing R packages (e.g., into sp and igraph objects).
 
